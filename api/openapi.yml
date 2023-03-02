@@ -1,0 +1,48 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Prefix Matcher Service
+servers:
+  - url: http://localhost:9999/prefix-matcher-service/api
+paths:
+  /search/prefix/{word}:
+    get:
+      summary: Get longest common prefix
+      tags:
+        - Longest Common Prefix
+      parameters: 
+        - name: word
+          in: path
+          description: input string
+          required: true
+          schema:
+            type: string    
+      responses:
+        200:
+          description: Get longest common prefix
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/LCP"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    LCP:
+      properties:
+        lcp:
+          type: string
+    Error:
+      required:
+        - id
+        - message
+      properties:
+        id:
+          type: integer
+          format: int32
+        message:
+          type: string
